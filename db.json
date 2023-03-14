@@ -1,0 +1,46 @@
+{
+   "invoices": [
+  {
+    "id":1,
+    "client": "JQ Holdings",
+    "due": "Due 19/08/2022",
+    "amount": 120000,
+    "status": "paid"
+  },
+  {
+    "id":2,
+    "client": "Incor Tech'",
+    "due": "Due 30/05/2022",
+    "amount": 200,
+    "status": "late"
+  },
+  {
+    "id": 3,
+    "client": "Atelier riri",
+    "due": "Due 19/11/2022",
+    "amount": 1500,
+    "status": "draft"
+  },
+  {
+    "id":4,
+    "client": "Werner Brothers",
+    "due": "Due 03/3/2022",
+    "amount": 1000000,
+    "status": "sent"
+  },
+  {
+    "id": 5,
+    "client": "JQ Holdings",
+    "due": "Due 19/04/2022",
+    "amount": 100,
+    "status": "paid"
+  },
+  {
+    "id": 6,
+    "client": "Java Kenya",
+    "due": "Due 19/01/2022",
+    "amount": 120000,
+    "status": "paid"
+  }
+]
+}
