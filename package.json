@@ -12,7 +12,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@vueuse/core": "^9.4.0",
+    "@vueuse/core": "^9.13.0",
     "deep-freeze": "^0.0.1",
     "immer": "^9.0.16",
     "lodash": "^4.17.21",
