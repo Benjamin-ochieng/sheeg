@@ -4,10 +4,10 @@
     <div class="flex justify-between items-center" v-else>
       <h1 class="text-2xl tracking-tight font-bold">Invoices</h1>
       <div class="flex items-center">
-        <base-button variant="ghost" size="sm" action="search">
+        <base-button variant="ghost" size="sm" @click="search">
           <icon name="Search" />
         </base-button>
-        <base-button variant="ghost" size="sm" action="add">
+        <base-button variant="ghost" size="sm" @click="add">
           <icon name="Plus" />
         </base-button>
       </div>
@@ -17,8 +17,7 @@
   <base-button
     variant="ghost"
     size="sm"
-    action="sortInvoices"
-    @sort-invoices="toggleShowInvoiceSort"
+    @click="toggleShowInvoiceSort"
     class="mt-4"
   >
     <icon name="ArrowUpDown" size="16" class="mr-1.5" />

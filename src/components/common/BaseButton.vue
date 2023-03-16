@@ -1,9 +1,9 @@
 <template>
   <button
+    :type="buttonType"
     class="inline-flex focus:outline-none rounded-full justify-center items-center space-x-2 text-sm font-medium leading-tight"
     :class="classObject"
     v-bind="$attrs"
-    @click="$emit(action)"
   >
     <slot />
   </button>
@@ -11,9 +11,10 @@
 
 <script setup>
 const props = defineProps({
-  action: {
+  buttonType: {
     type: String,
-    required: true,
+    default: 'button',
+    validator: (value) => ['button', 'submit', 'reset'].includes(value),
   },
   variant: {
     type: String,
