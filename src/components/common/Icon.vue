@@ -20,8 +20,8 @@ const props = defineProps({
     required: true,
   },
   size: {
-    type: Number,
-    default: 24,
+    type: String,
+    default: () => '24',
   },
   color: { type: String, default: 'currentColor' },
   strokeWidth: { type: Number, default: 2 },
