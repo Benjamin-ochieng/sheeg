@@ -57,6 +57,11 @@
         >
       </p>
     </footer>
+    <loading-overlay
+      v-if="isFetching"
+      label="Signing in"
+      tagline="Rolling your red carpet"
+    />
   </div>
 </template>
 
@@ -67,12 +72,13 @@ import AppleLogo from '../assets/images/apple-log.png';
 import BaseButton from '../components/common/BaseButton.vue';
 import Icon from '../components/common/Icon.vue';
 import BaseInput from '../components/common/BaseInput.vue';
+import LoadingOverlay from '../components/common/LoadingOverlay.vue';
 import { authSignin } from '../services/authService';
 
 const userName = ref('');
 const password = ref('');
 
-const { execute } = authSignin().post(() => ({
+const { execute, isFetching } = authSignin().post(() => ({
   userName: userName.value,
   password: password.value,
 }));
