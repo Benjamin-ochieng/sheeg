@@ -21,5 +21,5 @@ const useAuthFetch = createFetch({
   },
 });
 
-export const authSignin = () => useAuthFetch('/signin', { immediate: false });
+export const authLogin = () => useAuthFetch('/login', { immediate: false });
 export const authSignup = () => useAuthFetch('/signup', { immediate: false });

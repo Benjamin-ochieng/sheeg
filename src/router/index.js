@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PageInvoices from '../pages/PageInvoices.vue';
-import PageSignin from '../pages/PageSignin.vue';
+import PageLogin from '../pages/PageLogin.vue';
 import PageSignup from '../pages/PageSignup.vue';
 
 const routes = [
@@ -10,9 +10,9 @@ const routes = [
     component: PageSignup,
   },
   {
-    path: '/signin',
-    name: 'signin',
-    component: PageSignin,
+    path: '/login',
+    name: 'login',
+    component: PageLogin,
   },
   {
     path: '/invoices',
