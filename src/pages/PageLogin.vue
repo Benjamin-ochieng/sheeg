@@ -8,14 +8,22 @@
       </p>
     </div>
     <div class="py-6 divide-y space-y-8">
-      <form @submit.prevent="signin" class="flex flex-col text-xs space-y-8">
+      <form @submit.prevent="login" class="flex flex-col text-xs space-y-8">
         <base-input
           label="User Name"
           type="text"
           placeholder="Jane Doe"
           v-model="userName"
         />
-        <base-input label="password" type="password" v-model="password" />
+        <base-input label="Password" type="password" v-model="password" />
+        <div
+          v-if="error"
+          class="flex justify-between items-center rounded-lg border border-red-500 bg-red-100 text-red-500 text-sm px-6 py-4"
+        >
+          <icon name="AlertCircle" color="red" />
+          <p class="font-bold">Invalid username or password</p>
+          <icon name="X" color="red" size="16" />
+        </div>
         <p class="font-light tracking-tight">
           By contnuing, you accept our
           <a href="#" target="_blank"
@@ -40,7 +48,7 @@
           <img :src="GoogleLogo" class="w-4 h-4 mr-2" />
           Continue with Google
         </base-button>
-        <base-button variant="secondary" action="signin" class="w-full">
+        <base-button variant="secondary" class="w-full">
           <img :src="AppleLogo" class="w-4 h-4 mr-2" />
           Continue with Apple
         </base-button>
@@ -59,7 +67,7 @@
     </footer>
     <loading-overlay
       v-if="isFetching"
-      label="Signing in"
+      label="Loging in"
       tagline="Rolling your red carpet"
     />
   </div>
@@ -73,17 +81,17 @@ import BaseButton from '../components/common/BaseButton.vue';
 import Icon from '../components/common/Icon.vue';
 import BaseInput from '../components/common/BaseInput.vue';
 import LoadingOverlay from '../components/common/LoadingOverlay.vue';
-import { authSignin } from '../services/authService';
+import { authLogin } from '../services/authService';
 
 const userName = ref('');
 const password = ref('');
 
-const { execute, isFetching } = authSignin().post(() => ({
+const { execute, isFetching, error } = authLogin().post(() => ({
   userName: userName.value,
   password: password.value,
 }));
 
-const signin = () => execute();
+const login = () => execute();
 </script>
 
 <style lang="scss" scoped></style>
