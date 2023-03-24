@@ -10,20 +10,20 @@
     <div class="py-6 divide-y space-y-8">
       <form @submit.prevent="login" class="flex flex-col text-xs space-y-8">
         <base-input
-          label="User Name"
-          type="text"
-          placeholder="Jane Doe"
-          v-model="userName"
+          label="User Email"
+          type="email"
+          placeholder="JeffBezzos@amazon.com"
+          v-model="userEmail"
         />
-        <base-input label="Password" type="password" v-model="password" />
-        <div
+        <!-- <base-input label="Password" type="password" v-model="password" /> -->
+        <!-- <div
           v-if="error"
           class="flex justify-between items-center rounded-lg border border-red-500 bg-red-100 text-red-500 text-sm px-6 py-4"
         >
           <icon name="AlertCircle" color="red" />
           <p class="font-bold">Invalid username or password</p>
           <icon name="X" color="red" size="16" />
-        </div>
+        </div> -->
         <p class="font-light tracking-tight">
           By contnuing, you accept our
           <a href="#" target="_blank"
@@ -65,33 +65,39 @@
         >
       </p>
     </footer>
-    <loading-overlay
+    <!-- <loading-overlay
       v-if="isFetching"
       label="Loging in"
       tagline="Rolling your red carpet"
-    />
+    /> -->
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { Magic } from 'magic-sdk';
 import GoogleLogo from '../assets/images/google-logo.png';
 import AppleLogo from '../assets/images/apple-log.png';
 import BaseButton from '../components/common/BaseButton.vue';
 import Icon from '../components/common/Icon.vue';
 import BaseInput from '../components/common/BaseInput.vue';
-import LoadingOverlay from '../components/common/LoadingOverlay.vue';
-import { authLogin } from '../services/authService';
+// import LoadingOverlay from '../components/common/LoadingOverlay.vue';
+import { authLogin2 } from '../services/authService';
 
-const userName = ref('');
-const password = ref('');
+const userEmail = ref('');
+const didToken = ref('');
 
-const { execute, isFetching, error } = authLogin().post(() => ({
-  userName: userName.value,
-  password: password.value,
+const { execute, isFetching, error } = authLogin2(didToken).post(() => ({
+  userEmail: userEmail.value,
 }));
 
-const login = () => execute();
+// const login = () => execute();
+const login = async () => {
+  const magic = new Magic(import.meta.env.VITE_MAGIC_PUBLISHABLE_KEY);
+  didToken.value = await magic.auth.loginWithMagicLink({
+    email: userEmail.value,
+  });
+};
 </script>
 
 <style lang="scss" scoped></style>

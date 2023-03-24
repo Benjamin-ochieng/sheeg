@@ -17,6 +17,7 @@
     "immer": "^9.0.16",
     "lodash": "^4.17.21",
     "lucide-vue-next": "^0.125.0",
+    "magic-sdk": "^13.6.2",
     "vue": "^3.2.25",
     "vue-composable": "^1.0.0-beta.24",
     "vue-router": "^4.0.15"

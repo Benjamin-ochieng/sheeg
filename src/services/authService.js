@@ -21,5 +21,27 @@ const useAuthFetch = createFetch({
   },
 });
 
-export const authLogin = () => useAuthFetch('/login', { immediate: false });
+function useAuthFetch2(token) {
+  return createFetch({
+    baseUrl,
+    combination: 'overwrite',
+    options: {
+      async beforeFetch({ options }) {
+        // eslint-disable-next-line no-param-reassign
+        options = {
+          ...requestOptions,
+          headers: {
+            ...requestOptions.headers,
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        return { options };
+      },
+    },
+  });
+}
+
+export const authLogin2 = (token) =>
+  useAuthFetch2(token)('/login', { immediate: false });
+// export const authLogin = () => useAuthFetch('/login', { immediate: false });
 export const authSignup = () => useAuthFetch('/signup', { immediate: false });
