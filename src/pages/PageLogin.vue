@@ -39,7 +39,15 @@
             ></a
           >
         </p>
-        <base-button button-type="submit">Continue</base-button>
+        <base-button button-type="submit">
+          <icon
+            v-if="sendingMagicLink === true"
+            name="Loader"
+            class="animate-spin"
+            size="32"
+          />
+          <span v-else>Continue</span>
+        </base-button>
       </form>
       <div class="flex flex-col items-center justify-center space-y-4">
         <div class="-mt-3 bg-white px-2 text-xs font-light">or</div>
@@ -64,39 +72,56 @@
         >
       </p>
     </footer>
-    <loading-overlay
+    <!-- <loading-overlay
       v-if="isFetching"
       label="Loging in"
       tagline="Rolling your red carpet"
-    />
+    /> -->
+    <div v-if="data">{{ data }}</div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { Magic } from 'magic-sdk';
+import { createFetch } from '@vueuse/core';
 import GoogleLogo from '../assets/images/google-logo.png';
 import AppleLogo from '../assets/images/apple-log.png';
 import BaseButton from '../components/common/BaseButton.vue';
 import Icon from '../components/common/Icon.vue';
 import BaseInput from '../components/common/BaseInput.vue';
-import LoadingOverlay from '../components/common/LoadingOverlay.vue';
-import { authLogin2 } from '../services/authService';
+// import LoadingOverlay from '../components/common/LoadingOverlay.vue';
 
 const userEmail = ref('');
 const didToken = ref('');
+const sendingMagicLink = ref(false);
+const magic = new Magic(import.meta.env.VITE_MAGIC_PUBLISHABLE_KEY);
 
-const { execute, isFetching, error } = authLogin2(didToken).post(() => ({
-  userEmail: userEmail.value,
-}));
+const useMyFetch = createFetch({
+  baseUrl: 'http://localhost:3005',
+  options: {
+    async beforeFetch({ options }) {
+      sendingMagicLink.value = true;
+      didToken.value = await magic.auth.loginWithMagicLink({
+        email: userEmail.value,
+        // showUI: false,
+      });
+      sendingMagicLink.value = false;
+      // eslint-disable-next-line no-param-reassign
+      options.headers.Authorization = `Bearer ${didToken.value}`;
+      return { options };
+    },
+  },
+  fetchOptions: {
+    mode: 'cors',
+  },
+});
 
-const login = async () => {
-  const magic = new Magic(import.meta.env.VITE_MAGIC_PUBLISHABLE_KEY);
-  didToken.value = await magic.auth.loginWithMagicLink({
-    email: userEmail.value,
-  });
-  execute();
-};
+const { error, data, execute } = useMyFetch('/login', {
+  immediate: false,
+}).post();
+
+const login = () => execute();
 </script>
 
 <style lang="scss" scoped></style>
